@@ -1,0 +1,35 @@
+name: test
+
+on:
+  push:
+    branches:
+      - dev
+      - master
+
+jobs:
+  build:
+    name: python ${{ matrix.python }} and ${{ matrix.os }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        python: [3.7]
+        os: [windows-latest]
+    steps:
+      - name: clone repo
+        uses: actions/checkout@v1
+      - name: setup python ${{ matrix.python }}
+        uses: actions/setup-python@v1
+        with:
+          python-version: ${{ matrix.python }}
+      - name: install dependencies
+        run: |
+          python -m pip install --upgrade pip setuptools awscli
+          pip install https://github.com/pyinstaller/pyinstaller/archive/develop.tar.gz
+          pip install pyinstaller sphinx sphinx_rtd_theme
+          # choco install windows-sdk-10.0
+      - name: build distribution executable
+        run: |
+          ls
+          python -V
+          pyinstaller --version
+          pyinstaller sample.py --onedir --noupx --log-level=TRACE --debug=all
