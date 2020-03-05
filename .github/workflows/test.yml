@@ -31,5 +31,5 @@ jobs:
         run: |
           ls
           python -V
-          python -m pyinstaller --version
+          python -m PyInstaller --version
           python builder.py
