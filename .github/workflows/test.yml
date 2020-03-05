@@ -31,5 +31,5 @@ jobs:
         run: |
           ls
           python -V
-          pyinstaller --version
-          pyinstaller sample.py --onedir --noupx --log-level=TRACE --debug=all
+          python -m pyinstaller --version
+          python builder.py
